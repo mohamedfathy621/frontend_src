@@ -1,0 +1,84 @@
+.input-nice{
+    display: inline;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    padding-left: 25px;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: transparent;
+    background-image: none;
+    border: none;
+    border-radius: 20px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+input:focus {
+    outline: none;  /* Removes the default outline */
+    border: none;   /* Removes the border when focused */
+    box-shadow: none; /* Remove box-shadow if any */
+  }
+.form-card{
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+    text-align: left;
+    display: block;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
+    /*
+    width: '50%', 
+    margin:"auto",
+    padding:"20px" ,
+    textAlign: 'left',
+    display: 'block',
+    backgroundColor:"white",
+    borderRadius:"10px",
+    border:"1px solid lightgrey",
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)'
+    */
+}
+.join-us{
+    margin-left: 5px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    /*
+    {marginLeft:"5px", color:"blue",textDecoration:"underline",cursor:"pointer"
+    */
+}
+.searchBar{
+    width: 40%;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 14px;
+    padding-left: 15px;
+    padding-right: 0px;
+    /*
+    width:"40%",border:"1px solid black", borderRadius:"20px",padding:"14px",paddingLeft:"15px",paddingRight:"0px"
+    */
+}
+.searchIcon{
+    z-index: 1;
+    font-size: 21px;
+    position: absolute;
+    pointer-events: none;
+    /*
+    zIndex:"1",fontSize:"21px",position:"absolute",pointerEvents:"none"
+    */
+}
+
+.form-header{
+    text-align: center;
+    margin-bottom: 30px;
+    color: #921A40;
+}
+.Header-Container{
+    max-width: 100%;
+    z-index: 2;
+    background-color: white;
+    margin-bottom: 20px;
+    /*maxWidth:"100%",zIndex:'2',backgroundColor:"white",marginBottom:"20px"*/
+}
