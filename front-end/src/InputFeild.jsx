@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-const InputFeild= ({input_data}) =>{
+const InputFeild= ({input_data,valid,extra_info}) =>{
     return (
         <div style={{marginBottom:"10px"}}>
-             <label htmlFor="input">{input_data.label}</label>
+             <label >{input_data.label}</label>
              <input type={input_data.type}  className={'form-control'} placeholder={input_data.placeholder} name={input_data.name} />
-             <small className="form-text "  style={{ color: input_data.small.color, display: input_data.small.display }}>{input_data.small.content}</small>
+             <small className="form-text "  style={{ color: input_data.small.color, display:valid?'none':'block' }}>{extra_info?extra_info:input_data.small.content}</small>
         </div>
        
     )
@@ -22,5 +22,7 @@ InputFeild.propTypes = {
         content: PropTypes.string,
       }).isRequired,
     }).isRequired,
+    valid: PropTypes.bool.isRequired,
+    extra_info:PropTypes.string
   }
 export default InputFeild

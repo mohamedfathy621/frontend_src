@@ -1,3 +1,27 @@
+@keyframes show_notification {
+    0% {
+        opacity: 1;       
+        right: 70%;
+    }
+    10%{
+        opacity: 1;       
+        right: 40%;
+    }
+    100% {
+        opacity: 0;       
+        display: none; 
+    }
+  }
+.card:hover{
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(1.03);
+    transition: transform 0.3s ease;
+}
+.card:hover .card_image{
+    transform: scale(0.94); /* Scale the child element down */
+    border: 1px solid lightgray;
+    transition: transform 0.2s ease; /* Smooth transition for the child */
+}
 .input-nice{
     display: inline;
     width: 100%;
@@ -14,9 +38,9 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 input:focus {
-    outline: none;  /* Removes the default outline */
-    border: none;   /* Removes the border when focused */
-    box-shadow: none; /* Remove box-shadow if any */
+    outline: none;  
+    border: none;  
+    box-shadow: none; 
   }
 .form-card{
     width: 50%;
@@ -28,26 +52,14 @@ input:focus {
     border-radius: 10px;
     border: 1px solid lightgray;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.7);
-    /*
-    width: '50%', 
-    margin:"auto",
-    padding:"20px" ,
-    textAlign: 'left',
-    display: 'block',
-    backgroundColor:"white",
-    borderRadius:"10px",
-    border:"1px solid lightgrey",
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.7)'
-    */
+
 }
 .join-us{
     margin-left: 5px;
     color: blue;
     text-decoration: underline;
     cursor: pointer;
-    /*
-    {marginLeft:"5px", color:"blue",textDecoration:"underline",cursor:"pointer"
-    */
+ 
 }
 .searchBar{
     width: 40%;
@@ -56,18 +68,14 @@ input:focus {
     padding: 14px;
     padding-left: 15px;
     padding-right: 0px;
-    /*
-    width:"40%",border:"1px solid black", borderRadius:"20px",padding:"14px",paddingLeft:"15px",paddingRight:"0px"
-    */
+
 }
 .searchIcon{
     z-index: 1;
     font-size: 21px;
     position: absolute;
     pointer-events: none;
-    /*
-    zIndex:"1",fontSize:"21px",position:"absolute",pointerEvents:"none"
-    */
+  
 }
 
 .form-header{
@@ -80,5 +88,49 @@ input:focus {
     z-index: 2;
     background-color: white;
     margin-bottom: 20px;
-    /*maxWidth:"100%",zIndex:'2',backgroundColor:"white",marginBottom:"20px"*/
+   
 }
+.message-box{
+    animation: show_notification 6s ease forwards; 
+    position: absolute;
+    left: -40%;
+    bottom: 40%;
+    text-align: center;
+    width: 20rem;
+   
+}
+.menu-box{
+    position: absolute;
+    right: 1%;
+    top: 8.2%;
+    text-align: center;
+    width: 20rem;
+   
+}
+
+.card_image{
+    height:375px;
+    width:100%;
+    margin: auto;
+    display:block;
+    border-radius: 0;
+    background-color:black;
+    border-bottom: 0.5px solid #ccc; 
+    z-index: 2;
+    
+}
+
+.quick_but{
+    position: relative;
+    bottom: 230%;
+    left: 70%;
+    z-index: 3;
+    background-color: limegreen;
+    border:1px solid limegreen ;
+    border-radius: 50px;
+    padding:5px 8px 5px 8px;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    width: 2.5rem;
+    }
