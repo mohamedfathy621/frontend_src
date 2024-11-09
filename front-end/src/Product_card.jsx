@@ -1,21 +1,7 @@
 import PropTypes from "prop-types";
+import { handel_refill } from "./assets/script_files/helperFunc";
 const Product_card = ({product,refill_request,setRefill_request,total_price,setTotal}) =>{
-    const handle_refill=()=>{
-        const confirm = window.confirm(`add ${product.name} to refill list`);
-        if(confirm){
-            const temp={...refill_request}
-            if(!temp[product.name]){
-                temp[product.name]={'quantaity':1,'price':product.price}
-            }
-            else{
-                temp[product.name]={'quantaity':temp[product.name].quantaity+1,'price':product.price}
-            }
-            sessionStorage.setItem('refills', JSON.stringify(temp));
-            sessionStorage.setItem('total',total_price+parseFloat(product.price))
-            setTotal(total_price+parseFloat(product.price))
-            setRefill_request(temp)
-        }
-    }
+
     return(
           <div  className="col-md-4" >
             <div className="card mb-4 box-shadow"  style={{borderRadius:"0",maxWidth:"90%"}}  >
@@ -30,7 +16,7 @@ const Product_card = ({product,refill_request,setRefill_request,total_price,setT
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">
-                <button type="button" className="btn btn-success" onClick={()=>handle_refill()}>
+                <button type="button" className="btn btn-success" onClick={()=>handel_refill(product,refill_request,total_price,setTotal,setRefill_request)}>
                    <i className='bx bx-cart' style={{zIndex:"3",fontSize:"20px"}}></i>
                    Place refill order
                 </button>

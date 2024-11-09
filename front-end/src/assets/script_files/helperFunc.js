@@ -1,6 +1,7 @@
 import { register,login,refresh_token,get_medications,get_chart } from "./handle_requests";
 import { login_form,register_form } from "./Forms_classes";
 import { jwtDecode } from 'jwt-decode'
+import { send_order } from "./handle_requests";
 export function Map_forms(type){
     switch(type){
         case 'register':
@@ -178,4 +179,37 @@ export function ask_chart(){
         console.log(result.data)
         return result.data
     })
+}
+
+export function try_refresh(setNotification,setRefill_request,setTotal,setCart,count,total_price,refill_request){
+    const confirm = window.confirm(`are you sure you want to submit your order`);
+    if(confirm){
+        const accessToken = localStorage.getItem("accessToken");
+        const username = localStorage.getItem('username');
+        send_order(accessToken,{'username':username,'totalprice':total_price,'orderlist':refill_request}).then((result)=>{
+                console.log(result)
+         })
+         setNotification(['Order sent',count+1])
+         setRefill_request({})
+         setTotal(0)
+         setCart(false)
+         sessionStorage.removeItem('refills')
+         sessionStorage.removeItem('total')
+    }
+}
+export function handel_refill(product,refill_request,total_price,setTotal,setRefill_request){
+    const confirm = window.confirm(`add ${product.name} to refill list`);
+        if(confirm){
+            const temp={...refill_request}
+            if(!temp[product.name]){
+                temp[product.name]={'quantaity':1,'price':product.price}
+            }
+            else{
+                temp[product.name]={'quantaity':temp[product.name].quantaity+1,'price':product.price}
+            }
+            sessionStorage.setItem('refills', JSON.stringify(temp));
+            sessionStorage.setItem('total',total_price+parseFloat(product.price))
+            setTotal(total_price+parseFloat(product.price))
+            setRefill_request(temp)
+        }
 }

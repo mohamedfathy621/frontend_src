@@ -1,6 +1,6 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-
+import PropTypes from 'prop-types';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -46,5 +46,8 @@ const PieChart = ({labels,counts}) => {
     </div>
   );
 };
-
+PieChart.propTypes = {
+  labels: PropTypes.array.isRequired,
+  counts: PropTypes.array.isRequired
+}
 export default PieChart;
