@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import MenuItem from './assets/small_comps/MenuItem';
 import { send_order } from './assets/script_files/handle_requests';
 import { useState } from 'react';
-const Head = ({setPage,loggedin,setLogged,refill_request,setRefill_request,total_price,setTotal}) =>{
+const Head = ({setPage,loggedin,setLogged,refill_request,setRefill_request,total_price,setTotal,setNotification,count}) =>{
     const [cart,setCart]=useState(false)
     const try_refresh=()=>{
         const confirm = window.confirm(`are you sure you want to submit your order`);
@@ -14,7 +14,8 @@ const Head = ({setPage,loggedin,setLogged,refill_request,setRefill_request,total
             const username = localStorage.getItem('username');
             send_order(accessToken,{'username':username,'totalprice':total_price,'orderlist':refill_request}).then((result)=>{
                     console.log(result)
-             }) 
+             })
+             setNotification(['Order sent',count+1])
              setRefill_request({})
              setTotal(0)
              setCart(false)
@@ -22,7 +23,6 @@ const Head = ({setPage,loggedin,setLogged,refill_request,setRefill_request,total
              sessionStorage.removeItem('total')
         }
     }
-    console.log(refill_request)
     return(
         <div className="container Header-Container">
             <header className="d-flex flex-wrap py-1 border-bottom row" style={{paddingLeft:"3%",marginBottom:"0",paddingRight:"3%"}}>
@@ -32,8 +32,10 @@ const Head = ({setPage,loggedin,setLogged,refill_request,setRefill_request,total
                         <SearchBar/>
                      </div>
                     <div className='col d-flex justify-content-end' style={{display:"flex"}}>
-                        <NavIcon directon='login' name={loggedin?'log out':'log in'} icon={loggedin?'bx bx-user':'bx bxs-user'} setPage={setPage} setLogged={setLogged} setRefill_request={setRefill_request} setTotal={setTotal}/>
+                        <NavIcon directon='login' name={loggedin?'log out':'log in'} icon={loggedin?'bx bx-user':'bx bxs-user'} setPage={setPage} setLogged={setLogged} setRefill_request={setRefill_request} setTotal={setTotal} setNotification={setNotification} count={count}/>
                         {loggedin?null:<NavIcon directon='register' name='register' icon='bx bxs-user-account' setPage={setPage}/>}
+                        {!loggedin?null:<NavIcon directon='home' name='home' icon='bx bxs-home' setPage={setPage}/>}
+                        {!loggedin?null:<NavIcon directon='chart' name='chart' icon='bx bx-line-chart' setPage={setPage}/>}
                         {loggedin?<NavIcon directon='' name='your orders' icon='bx bxs-cart' setPage={setPage} refill_request={refill_request} setRefill_request={setRefill_request} order_length={Object.keys(refill_request).length} setCart={setCart} cart={cart}/>:null}
                     </div>
                 </div>
@@ -56,6 +58,8 @@ Head.propTypes = {
     refill_request: PropTypes.object.isRequired,
     setRefill_request: PropTypes.func.isRequired,
     total_price: PropTypes.number.isRequired,
-    setTotal: PropTypes.func.isRequired
+    setTotal: PropTypes.func.isRequired,
+    setNotification:PropTypes.func.isRequired,
+    count: PropTypes.number.isRequired
 };
 export default Head;

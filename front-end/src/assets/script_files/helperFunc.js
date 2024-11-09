@@ -1,4 +1,4 @@
-import { register,login,refresh_token } from "./handle_requests";
+import { register,login,refresh_token,get_medications,get_chart } from "./handle_requests";
 import { login_form,register_form } from "./Forms_classes";
 import { jwtDecode } from 'jwt-decode'
 export function Map_forms(type){
@@ -75,7 +75,7 @@ function resolve_status(result,setNotification,notification,setValidations,formD
     }
     else if(result.data.status==='failure'){
         let error_array={}
-        console.log(result.data.message)
+        console.log(result)
         formData.forEach((value,key)=>{
             if(result.data.errors[key]){
                 error_array[key]=false;
@@ -111,4 +111,71 @@ export function validate_JWT(token){
     const now = Date.now() / 1000; 
     
     return decoded.exp > now;
+}
+
+export function log_out(setNotification,setRefill_request,setTotal,setLogged,setPage,count){
+    const confirm = window.confirm('are you sure you want to log out')
+    if(confirm){
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
+        localStorage.removeItem('username')
+        sessionStorage.removeItem('refills')
+        sessionStorage.removeItem('total')
+        setNotification(['logged out',count+1])
+        setRefill_request({})
+        setTotal(0)
+        setLogged(false)
+        setPage('login')
+    }
+}
+
+export function check_token(isMounted,setProducts,setPage,setLogged,setNotification,notification){
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem('refreshToken')
+    if(validate_JWT(accessToken)){
+        if(!isMounted.current){
+          isMounted.current=true;
+          get_medications(accessToken).then((result)=>{
+          
+            if(result.data.status==='success'){
+              setProducts(result.data.medications)
+            }
+          
+          })  
+        }
+        setLogged(true)
+        setPage('home')
+        setNotification(['welcome back',notification[1]+1])
+      }
+      else if(refreshToken){
+        refresh_token({'refresh':refreshToken}).then((result)=>{
+          console.log(result)
+          if(result.data.status==='success'){
+            setLogged(true)
+            setNotification([result.data.message,notification[1]+1])
+            localStorage.setItem('accessToken', result.data.access_token);
+            localStorage.setItem('refreshToken', result.data.refresh_token);
+          }
+          else{
+            setNotification([result.data.message,notification[1]+1])
+            setLogged(false)
+          }
+        }) 
+      }
+      else{
+        setLogged(false)
+        sessionStorage.removeItem('refills')
+        sessionStorage.removeItem('total')
+        localStorage.removeItem('username')
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+}
+
+export function ask_chart(){
+    const accessToken = localStorage.getItem("accessToken");
+    return get_chart(accessToken).then((result)=>{
+        console.log(result.data)
+        return result.data
+    })
 }

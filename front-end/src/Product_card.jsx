@@ -23,10 +23,10 @@ const Product_card = ({product,refill_request,setRefill_request,total_price,setT
               <div className="card-body">
                 <div className="row text-center">
                   <div className="col">
-                      <p>{product.name}</p>
+                      <p style={{fontSize:"20px"}}>{product.name}</p>
                   </div>
                   <div className="col">
-                      <p>Price: {product.price}$</p>
+                      <p style={{fontSize:"20px"}}>Price: {product.price}$</p>
                   </div>
                 </div>
                 <div className="d-flex justify-content-center">

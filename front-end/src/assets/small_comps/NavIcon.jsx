@@ -1,20 +1,11 @@
 import PropTypes from "prop-types";
-const NavIcon = ({directon,name,setPage,icon,setLogged,order_length,refill_request,setRefill_request,setTotal,setCart,cart}) =>{
-    const log_out=()=>{
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem('username')
-        sessionStorage.removeItem('refills')
-        sessionStorage.removeItem('total')
-        setRefill_request({})
-        setTotal(0)
-        setLogged(false)
-        setPage('login')
-    }
+
+import { log_out } from "../script_files/helperFunc";
+const NavIcon = ({directon,name,setPage,icon,setLogged,order_length,refill_request,setRefill_request,setTotal,setCart,cart,setNotification,count}) =>{
     const map_func= () =>{
         switch(name){
             case 'log out':
-                log_out()
+                log_out(setNotification,setRefill_request,setTotal,setLogged,setPage,count)
                 break
             case 'your orders':
                 console.log(refill_request)
@@ -42,6 +33,8 @@ NavIcon.propTypes = {
     setTotal:PropTypes.func,
     order_length:PropTypes.number,
     setCart:PropTypes.func,
-    cart: PropTypes.bool
+    cart: PropTypes.bool,
+    setNotification: PropTypes.func,
+    count:PropTypes.number
   };
 export default NavIcon

@@ -65,3 +65,19 @@ export function send_order(Token,body){
     });
 }
   
+
+export function get_chart(Token){
+    const request_url=`${base_url}medications/chart`
+    const token = Token // Get the token
+    return axios.get(request_url,{
+        headers: {
+            Authorization: `Bearer ${token}`, // Attach token to Authorization header
+        }
+    }).then((result)=>{
+       
+        return result;
+    }).catch((error)=>{
+       
+        return error.response;
+    });
+}
