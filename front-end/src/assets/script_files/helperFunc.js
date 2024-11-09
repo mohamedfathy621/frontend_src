@@ -68,13 +68,14 @@ function resolve_status(result,setNotification,notification,setValidations,formD
     if(result.data.status==='success'){
         localStorage.setItem('accessToken', result.data.access_token);
         localStorage.setItem('refreshToken', result.data.refresh_token);
-        
+        localStorage.setItem('username',formData.get('username'))
         check_out(type,setPage,setLoggedin)
         setNotification([result.data.message,(notification+1)%10])
         setValidations([]);
     }
-    else if(result.data.status==='faliure'){
+    else if(result.data.status==='failure'){
         let error_array={}
+        console.log(result.data.message)
         formData.forEach((value,key)=>{
             if(result.data.errors[key]){
                 error_array[key]=false;

@@ -1,15 +1,20 @@
 import PropTypes from "prop-types";
-const Product_card = ({product,refill_request,setRefill_request}) =>{
+const Product_card = ({product,refill_request,setRefill_request,total_price,setTotal}) =>{
     const handle_refill=()=>{
-        const temp=refill_request
-        if(!temp[product.name]){
-            temp[product.name]=1
+        const confirm = window.confirm(`add ${product.name} to refill list`);
+        if(confirm){
+            const temp={...refill_request}
+            if(!temp[product.name]){
+                temp[product.name]={'quantaity':1,'price':product.price}
+            }
+            else{
+                temp[product.name]={'quantaity':temp[product.name].quantaity+1,'price':product.price}
+            }
+            sessionStorage.setItem('refills', JSON.stringify(temp));
+            sessionStorage.setItem('total',total_price+parseFloat(product.price))
+            setTotal(total_price+parseFloat(product.price))
+            setRefill_request(temp)
         }
-        else{
-            temp[product.name]=temp[product.name]+1
-        }
-        sessionStorage.setItem('refills', JSON.stringify(temp));
-        setRefill_request(temp)
     }
     return(
           <div  className="col-md-4" >
@@ -39,9 +44,11 @@ Product_card.propTypes = {
     product: PropTypes.shape({
       image_url: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      price: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
     }).isRequired,
     refill_request:PropTypes.object.isRequired,
-    setRefill_request:PropTypes.func.isRequired
+    setRefill_request:PropTypes.func.isRequired,
+    total_price: PropTypes.number.isRequired,
+    setTotal: PropTypes.func.isRequired
 }
 export default Product_card
